@@ -4,8 +4,7 @@ import torch
 from langchain.prompts import PromptTemplate
 from langchain.chains import SequentialChain
 
-secret_key=os.environ.get('secret_key')
-os.environ["HUGGINGFACEHUB_API_TOKEN"]=secret_key
+os.environ["HUGGINGFACEHUB_API_TOKEN"]="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"
 local_llm = HuggingFacePipeline.from_model_id(
     model_id="google/flan-t5-large",
     task="text2text-generation",
