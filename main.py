@@ -1,5 +1,5 @@
 import streamlit as st
-import langchain_helper
+from langchain_helper import cap_and_food
 
 st.title("Capital and Food!")
 country = st.sidebar.text_input("Enter the name of the country: ")
