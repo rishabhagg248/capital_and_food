@@ -2,7 +2,7 @@ import os
 from langchain_huggingface import HuggingFacePipeline
 import torch
 from langchain.prompts import PromptTemplate
-from langchain.chains import SequentialChain
+from langchain.chains import SequentialChain, LLMChain
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"]="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"
 local_llm = HuggingFacePipeline.from_model_id(
