@@ -12,8 +12,7 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = api_token
 # Use Hugging Face Inference API instead of local pipeline
 llm = HuggingFaceEndpoint(
     repo_id="microsoft/DialoGPT-medium",  # This model is more reliable
-    max_length=100,
-    temperature=0.1,
+    temperature=0,
     huggingfacehub_api_token=api_token
 )
 
