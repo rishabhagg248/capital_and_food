@@ -9,7 +9,7 @@ st.write("(Success rate 90%)\n\n")
 if country:
     response=cap_and_food(country)
     st.header(response['capital']).strip()
-    food=response['food_names'].strip().split(",")
+    food=response['food_item'].strip().split(",")
     st.write("Top 5 items of ", response['capital'].strip(), ":\n")
     ct=1
     for item in food:
