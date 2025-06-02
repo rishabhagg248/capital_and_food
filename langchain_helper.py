@@ -1,40 +1,49 @@
 import os
-from langchain_huggingface import HuggingFacePipeline
-import torch
+from langchain_huggingface import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
 from langchain.chains import SequentialChain, LLMChain
+import streamlit as st
 
-os.environ["HUGGINGFACEHUB_API_TOKEN"]="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"
-local_llm = HuggingFacePipeline.from_model_id(
-    model_id="google/flan-t5-large",
-    task="text2text-generation",
-    model_kwargs={
-        "temperature": 0,
-        "max_length": 100
-    }
+# Use Streamlit secrets - with fallback for local testing
+try:
+    api_token = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
+except:
+    api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN", "")
+
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = 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
+
+# Use Hugging Face Inference API instead of local pipeline
+llm = HuggingFaceEndpoint(
+    repo_id="microsoft/DialoGPT-medium",  # This model is more reliable
+    max_length=100,
+    temperature=0.1,
+    huggingfacehub_api_token=api_token
 )
 
 def cap_and_food(country):
-
     capital_chain = LLMChain(
-        llm=local_llm,
+        llm=llm,
         prompt=PromptTemplate(
             input_variables=['country'],
-            template="What is the capital of {country}? answer with just the capital city name."
+            template="What is the capital of {country}? Answer with just the capital city name."
         ),
         output_key="capital"
     )
-
+    
     food_chain = LLMChain(
-        llm=local_llm,
+        llm=llm,
         prompt=PromptTemplate(
             input_variables=['capital'],
-            template="Tell me 5 famous food items in {capital}. answer with a comma separated list of food items."
+            template="Tell me 5 famous food items in {capital}. Answer with a comma separated list of food items."
         ),
-        output_key="food_item"
+        output_key="food_names"
     )
-
-    seq_chain = SequentialChain(chains=[capital_chain, food_chain], input_variables=['country'],
-                                output_variables=['capital', 'food_item'])
+    
+    seq_chain = SequentialChain(
+        chains=[capital_chain, food_chain], 
+        input_variables=['country'],
+        output_variables=['capital', 'food_names']
+    )
+    
     response = seq_chain.invoke({"country": country})
     return response
