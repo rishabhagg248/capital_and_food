@@ -2,3 +2,4 @@ streamlit
 langchain
 langchain-huggingface
 langchain-community
+requests
