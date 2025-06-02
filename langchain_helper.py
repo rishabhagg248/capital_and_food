@@ -5,10 +5,7 @@ from langchain.chains import SequentialChain, LLMChain
 import streamlit as st
 
 # Use Streamlit secrets - with fallback for local testing
-try:
-    api_token = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
-except:
-    api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN", "")
+api_token = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = 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
 
