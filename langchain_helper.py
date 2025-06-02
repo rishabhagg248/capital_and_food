@@ -6,7 +6,7 @@ from langchain.chains import SequentialChain, LLMChain
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"]="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"
 local_llm = HuggingFacePipeline.from_model_id(
-    model_id="Mistral-7B-v0.1",
+    model_id="mistralai/Mistral-7B-v0.1",
     task="text2text-generation",
     model_kwargs={
         "temperature": 0,
