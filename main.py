@@ -7,11 +7,24 @@ st.write("Enter the name of a country and the program will give you the capital 
 st.write("(Success rate 90%)\n\n")
 
 if country:
-    response=cap_and_food(country)
-    st.header(response['capital']).strip()
-    food=response['food_item'].strip().split(",")
-    st.write("Top 5 items of ", response['capital'].strip(), ":\n")
-    ct=1
-    for item in food:
-        st.write(ct, " ", item)
-        ct+=1
+    try:
+        # Show loading spinner
+        with st.spinner('Getting information...'):
+            response = cap_and_food(country)
+        
+        # Display capital (fixed st.header usage)
+        st.header(response['capital'])
+        
+        # Display foods (fixed key access and method call)
+        if 'food_item' in response and response['food_item']:
+            food = response['food_item'].strip().split(",")
+            st.write(f"Top 5 items of {response['capital']}:")
+            
+            for ct, item in enumerate(food, 1):
+                st.write(f"{ct}. {item.strip()}")
+        else:
+            st.write("No food information available.")
+            
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
+        st.write("Please try again with a different country name.")
