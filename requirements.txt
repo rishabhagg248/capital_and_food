@@ -5,3 +5,5 @@ torch
 langchain
 langchain-community
 accelerate
+torch==2.0.1
+transformers==4.30.2
