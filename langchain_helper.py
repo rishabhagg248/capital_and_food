@@ -11,8 +11,7 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = api_token
 # Use a working model from Hugging Face Inference API
 llm = HuggingFaceEndpoint(
     repo_id="google/flan-t5-base",  # This model works reliably
-    temperature=0.1,
-    max_length=100,
+    temperature=0,
     huggingfacehub_api_token=api_token
 )
 
